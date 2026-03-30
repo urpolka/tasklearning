@@ -1,0 +1,773 @@
+/*
+  Theme Name: WP Learn Theme
+  Theme URI:  https://example.com
+  Author:     Your Name
+  Description: Навчальна верстка для "натягування" на WordPress
+  Version:    1.0
+  License:    GNU General Public License v2 or later
+*/
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary:    #2c6fad;
+  --color-primary-dk: #1a4f80;
+  --color-accent:     #e8a020;
+  --color-text:       #222;
+  --color-muted:      #666;
+  --color-border:     #ddd;
+  --color-bg:         #f5f5f5;
+  --color-white:      #fff;
+
+  --font-base: 'Georgia', serif;
+  --font-ui:   'Arial', sans-serif;
+
+  --max-width: 1140px;
+  --sidebar-width: 280px;
+  --gap: 24px;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-base);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover { color: var(--color-primary-dk); text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+ul, ol { padding-left: 1.4em; }
+
+/* ==========================================================================
+   LAYOUT WRAPPER
+   ========================================================================== */
+
+.site-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Grid: content + sidebar */
+.content-area {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: var(--gap);
+  padding: var(--gap) 0;
+}
+
+/* Full-width page (без sidebar) */
+.content-area--full {
+  grid-template-columns: 1fr;
+}
+
+/* ==========================================================================
+   HEADER  →  WP: header.php
+   ========================================================================== */
+
+.site-header {
+  background: var(--color-white);
+  border-bottom: 3px solid var(--color-primary);
+  padding: 20px 0;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-branding {}
+
+.site-title {
+  font-family: var(--font-ui);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+.site-title a { color: inherit; }
+.site-title a:hover { text-decoration: none; color: var(--color-primary-dk); }
+
+.site-description {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  font-family: var(--font-ui);
+}
+
+/* ==========================================================================
+   NAVIGATION  →  WP: functions.php  register_nav_menus()
+                      wp_nav_menu()
+   ========================================================================== */
+
+.main-nav {}
+
+.main-nav__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0;
+  background: var(--color-primary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.main-nav__list li {
+  position: relative;
+}
+
+.main-nav__list > li > a {
+  display: block;
+  padding: 12px 18px;
+  color: var(--color-white);
+  white-space: nowrap;
+}
+.main-nav__list > li > a:hover,
+.main-nav__list > li.current-menu-item > a {
+  background: var(--color-primary-dk);
+  text-decoration: none;
+}
+
+/* --- Dropdown (підменю) --- */
+.main-nav__list .sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  list-style: none;
+  padding: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+
+.main-nav__list li:hover > .sub-menu,
+.main-nav__list li:focus-within > .sub-menu {
+  display: block;
+}
+
+.main-nav__list .sub-menu a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+.main-nav__list .sub-menu a:hover {
+  background: var(--color-bg);
+  text-decoration: none;
+}
+
+/* Стрілка-індикатор підменю */
+.main-nav__list li.menu-item-has-children > a::after {
+  content: " ▾";
+  font-size: 0.75em;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   BREADCRUMBS  →  WP: плагін Yoast SEO / Rank Math / Breadcrumb NavXT
+                      або функція get_the_breadcrumb()
+   ========================================================================== */
+
+.breadcrumbs {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--gap);
+}
+.breadcrumbs a { color: var(--color-primary); }
+.breadcrumbs .sep { margin: 0 6px; }
+.breadcrumbs .current { color: var(--color-muted); }
+
+/* ==========================================================================
+   POSTS LIST  →  WP: index.php, archive.php  (The Loop)
+   ========================================================================== */
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* --- Окрема картка посту --- */
+.post-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.post-card__thumbnail {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+.post-card__thumbnail--placeholder {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #cde 0%, #bcd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #aaa;
+}
+
+.post-card__body { padding: 20px; }
+
+.post-card__meta {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.post-card__meta a { color: var(--color-muted); }
+.post-card__meta a:hover { color: var(--color-primary); }
+
+.post-card__title {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.post-card__title a { color: var(--color-text); }
+.post-card__title a:hover { color: var(--color-primary); text-decoration: none; }
+
+.post-card__excerpt {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 18px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: 3px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.btn:hover { background: var(--color-primary-dk); color: var(--color-white); text-decoration: none; }
+
+/* ==========================================================================
+   PAGINATION  →  WP: the_posts_pagination()  або  paginate_links()
+   ========================================================================== */
+
+.pagination {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: var(--gap);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+.pagination a,
+.pagination .current {
+  display: inline-block;
+  padding: 6px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+.pagination .current {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+.pagination a:hover { background: var(--color-bg); text-decoration: none; }
+
+/* ==========================================================================
+   SINGLE POST  →  WP: single.php
+   ========================================================================== */
+
+.single-post {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 30px;
+}
+
+.single-post__title {
+  font-size: 1.9rem;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.single-post__meta {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.single-post__meta a { color: var(--color-muted); }
+
+.single-post__thumbnail {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+
+/* Типографіка контенту (the_content) */
+.entry-content h2 { font-size: 1.4rem; margin: 28px 0 12px; }
+.entry-content h3 { font-size: 1.15rem; margin: 22px 0 10px; }
+.entry-content p  { margin-bottom: 1.1em; }
+.entry-content ul,
+.entry-content ol { margin-bottom: 1.1em; }
+.entry-content blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding: 12px 20px;
+  margin: 20px 0;
+  background: #f0f6ff;
+  color: var(--color-muted);
+  font-style: italic;
+}
+.entry-content pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.88rem;
+  margin-bottom: 1.1em;
+}
+.entry-content img { border-radius: 3px; margin: 12px 0; }
+
+/* Теги посту */
+.post-tags {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+.post-tags a {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 3px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  color: var(--color-muted);
+}
+.post-tags a:hover { background: var(--color-primary); color: #fff; border-color: var(--color-primary); text-decoration: none; }
+
+/* Навігація між постами */
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: var(--gap);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+.post-navigation a {
+  display: block;
+  padding: 12px 16px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  max-width: 48%;
+}
+.post-navigation .nav-prev::before { content: "← "; }
+.post-navigation .nav-next::after  { content: " →"; }
+
+/* ==========================================================================
+   COMMENTS  →  WP: comments.php  comment_form()  wp_list_comments()
+   ========================================================================== */
+
+.comments-area {
+  margin-top: var(--gap);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 30px;
+}
+
+.comments-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.93rem;
+}
+.comment:last-child { border-bottom: none; }
+
+.comment__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #cde;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #aaa;
+}
+
+.comment__meta {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+.comment__author {
+  font-weight: bold;
+  color: var(--color-text);
+}
+
+/* Форма коментарів */
+.comment-form { margin-top: 28px; }
+.comment-form__title {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+.comment-form__field {
+  margin-bottom: 14px;
+}
+.comment-form__field label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: var(--color-muted);
+}
+.comment-form__field input,
+.comment-form__field textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-size: 0.95rem;
+  font-family: var(--font-base);
+  background: var(--color-bg);
+}
+.comment-form__field textarea { height: 130px; resize: vertical; }
+.comment-form__field input:focus,
+.comment-form__field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.comment-form .btn { margin-top: 6px; }
+
+/* ==========================================================================
+   SIDEBAR & WIDGETS  →  WP: sidebar.php  register_sidebar()  dynamic_sidebar()
+   ========================================================================== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* --- Один віджет --- */
+.widget {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.widget__title {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.widget__body { padding: 14px 16px; }
+
+/* Віджет: пошук */
+.widget-search {
+  display: flex;
+  gap: 0;
+}
+.widget-search__input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+}
+.widget-search__input:focus { outline: none; border-color: var(--color-primary); }
+.widget-search__btn {
+  padding: 8px 14px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.widget-search__btn:hover { background: var(--color-primary-dk); }
+
+/* Віджет: список (категорії, теги, останні пости) */
+.widget-list {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+}
+.widget-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.widget-list li:last-child { border-bottom: none; }
+.widget-list a { color: var(--color-text); }
+.widget-list a:hover { color: var(--color-primary); text-decoration: none; }
+.widget-list .count {
+  font-size: 0.78rem;
+  background: var(--color-bg);
+  padding: 2px 7px;
+  border-radius: 20px;
+  color: var(--color-muted);
+}
+
+/* Віджет: хмара тегів */
+.widget-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--font-ui);
+}
+.widget-tags a {
+  padding: 3px 10px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+.widget-tags a:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Віджет: текстовий (HTML-блок) */
+.widget-text p {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin-bottom: 0.6em;
+}
+
+/* ==========================================================================
+   ARCHIVE HEADER  →  WP: archive.php  get_the_archive_title()
+   ========================================================================== */
+
+.archive-header {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: var(--gap);
+}
+.archive-header__label {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  margin-bottom: 4px;
+}
+.archive-header__title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+.archive-header__desc {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* ==========================================================================
+   STATIC PAGE  →  WP: page.php
+   ========================================================================== */
+
+.page-single {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 30px;
+}
+.page-single__title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* ==========================================================================
+   FOOTER  →  WP: footer.php  register_sidebar() — widget zones
+   ========================================================================== */
+
+.site-footer {
+  background: #1a2232;
+  color: #aab;
+  margin-top: 40px;
+  font-family: var(--font-ui);
+}
+
+/* Зона з трьома колонками віджетів */
+.footer-widgets {
+  padding: 36px 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.footer-widget__title {
+  color: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2e3d55;
+}
+
+.footer-widget ul {
+  list-style: none;
+  padding: 0;
+  font-size: 0.88rem;
+}
+.footer-widget ul li { padding: 4px 0; }
+.footer-widget ul a { color: #8899bb; }
+.footer-widget ul a:hover { color: #fff; text-decoration: none; }
+.footer-widget p { font-size: 0.88rem; line-height: 1.6; }
+
+/* Нижня смужка */
+.footer-bar {
+  border-top: 1px solid #2e3d55;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #667;
+}
+.footer-bar a { color: #8899bb; }
+.footer-bar a:hover { color: #fff; text-decoration: none; }
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   RESPONSIVE  (базова адаптивність)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .content-area {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-widgets {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .main-nav__list {
+    flex-direction: column;
+    gap: 0;
+  }
+  .main-nav__list .sub-menu {
+    position: static;
+    border-top: none;
+    box-shadow: none;
+    display: none; /* в реальному WP керується JS */
+  }
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+  .footer-widgets {
+    grid-template-columns: 1fr;
+  }
+  .footer-bar {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+  .post-navigation {
+    flex-direction: column;
+  }
+  .post-navigation a { max-width: 100%; }
+}

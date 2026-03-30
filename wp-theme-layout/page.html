@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- WP: wp_head() -->
+  <title>Про нас — WP Learn Theme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page page-id-10 page-template-default">
+<!--
+  WP: body_class() → 'page page-id-10 page-template-default'
+  Для кастомного шаблону: 'page-template-about page-template-aboutphp'
+-->
+
+<!-- HEADER  →  WP: get_header() -->
+<header class="site-header">
+  <div class="site-wrapper">
+    <div class="site-header__inner">
+
+      <div class="site-branding">
+        <p class="site-title"><a href="index.html">WP Learn Theme</a></p>
+        <p class="site-description">Навчальна верстка для WordPress</p>
+      </div>
+
+      <nav class="main-nav" aria-label="Головна навігація">
+        <ul class="main-nav__list">
+          <li><a href="index.html">Головна</a></li>
+          <li class="menu-item-has-children">
+            <a href="#">Рубрики</a>
+            <ul class="sub-menu">
+              <li><a href="archive.html">Технології</a></li>
+              <li><a href="archive.html">Дизайн</a></li>
+              <li><a href="archive.html">Маркетинг</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children current-menu-item">
+            <a href="#">Сторінки</a>
+            <ul class="sub-menu">
+              <li class="current-menu-item"><a href="page.html">Про нас</a></li>
+              <li><a href="page.html">Контакти</a></li>
+              <li><a href="page.html">Портфоліо</a></li>
+            </ul>
+          </li>
+          <li><a href="archive.html">Архів</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT  →  WP: page.php -->
+<div class="site-wrapper">
+  <!--
+    Статична сторінка зазвичай не має сайдбару — це поширена практика.
+    Тому використовуємо content-area--full (один стовпець).
+
+    WP: Якщо потрібен сайдбар — просто прибрати клас --full
+    та додати get_sidebar() у шаблоні.
+  -->
+  <div class="content-area content-area--full">
+
+    <main id="main" class="main-content">
+
+      <!-- ===== ХЛІБНІ КРИХТИ =====
+           WP: Yoast → yoast_breadcrumb()
+               або bcn_display() (Breadcrumb NavXT)
+      -->
+      <nav class="breadcrumbs" aria-label="Хлібні крихти">
+        <a href="index.html">Головна</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span class="current">Про нас</span>
+      </nav>
+
+      <!-- WP: if ( have_posts() ) : while ( have_posts() ) : the_post(); -->
+      <article class="page-single" id="page-10">
+
+        <!-- WP: the_title() -->
+        <h1 class="page-single__title">Про нас</h1>
+
+        <!-- WP: the_content() -->
+        <div class="entry-content">
+
+          <p>Ласкаво просимо до <strong>WP Learn Theme</strong> — навчального ресурсу
+          для тих, хто хоче опанувати розробку тем WordPress з нуля.</p>
+
+          <h2>Наша місія</h2>
+          <p>Ми переконані, що найкращий спосіб вивчити WordPress — це практика.
+          Тому замість довгих теоретичних лекцій ми пропонуємо живі приклади:
+          готову HTML/CSS-верстку, яку ви будете крок за кроком перетворювати
+          на повноцінну WordPress-тему.</p>
+
+          <h2>Що ви отримаєте</h2>
+          <ul>
+            <li>Розуміння ієрархії шаблонів WordPress (Template Hierarchy)</li>
+            <li>Навички роботи з The Loop, хуками (actions &amp; filters) та WordPress API</li>
+            <li>Досвід реєстрації меню, сайдбарів і кастомних типів записів</li>
+            <li>Знання роботи з плагінами: Yoast SEO, Contact Form 7, WooCommerce</li>
+            <li>Готову базу для власних тем і дочірніх тем (Child Themes)</li>
+          </ul>
+
+          <h2>Команда</h2>
+          <p>Проєкт розвивається командою практикуючих WordPress-розробників
+          з досвідом понад 5 років. Ми самі колись були на вашому місці — і знаємо,
+          які питання виникають найчастіше.</p>
+
+          <blockquote>
+            Не бійтеся зламати щось у процесі навчання.
+            Тестовий WordPress для того і існує.
+          </blockquote>
+
+          <h2>Контакти</h2>
+          <p>Маєте питання? Пишіть нам на
+          <a href="mailto:info@example.com">info@example.com</a>
+          або залишайте коментарі під статтями.</p>
+
+        </div><!-- .entry-content -->
+
+      </article>
+      <!-- WP: endwhile; endif; -->
+
+    </main>
+
+  </div><!-- .content-area -->
+</div><!-- .site-wrapper -->
+
+<!-- FOOTER  →  WP: get_footer() -->
+<footer class="site-footer">
+  <div class="site-wrapper">
+    <div class="footer-widgets">
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">WP Learn Theme</h4>
+        <p>Навчальний проєкт для освоєння розробки тем WordPress.</p>
+      </div>
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Навігація</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="archive.html">Архів</a></li>
+          <li><a href="page.html">Про нас</a></li>
+          <li><a href="page.html">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Контакти</h4>
+        <ul>
+          <li>📧 <a href="mailto:info@example.com">info@example.com</a></li>
+          <li>🐦 <a href="#">Twitter / X</a></li>
+          <li>📘 <a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>© 2025 <a href="index.html">WP Learn Theme</a>. Всі права захищено.</span>
+      <span>Зроблено з ❤️ для навчання WordPress</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WP: wp_footer() -->
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- WP: wp_head() виводить сюди теги плагінів, стилів, title -->
+  <title>Головна — WP Learn Theme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="home blog">
+<!--
+  WP: body_class() — WordPress автоматично додає класи залежно від типу сторінки.
+  Наприклад: home, blog, single-post, page, archive, category-назва тощо.
+-->
+
+<!-- ======================================================================
+     HEADER  →  WP: get_header()  /  header.php
+     ====================================================================== -->
+<header class="site-header">
+  <div class="site-wrapper">
+    <div class="site-header__inner">
+
+      <!-- WP: bloginfo('name'), bloginfo('description') -->
+      <div class="site-branding">
+        <p class="site-title"><a href="index.html">WP Learn Theme</a></p>
+        <p class="site-description">Навчальна верстка для WordPress</p>
+      </div>
+
+      <!-- WP: wp_nav_menu(['theme_location' => 'primary', 'menu_class' => 'main-nav__list']) -->
+      <nav class="main-nav" aria-label="Головна навігація">
+        <ul class="main-nav__list">
+          <li class="current-menu-item"><a href="index.html">Головна</a></li>
+
+          <!-- Пункт з підменю: WP додає клас menu-item-has-children автоматично -->
+          <li class="menu-item-has-children">
+            <a href="#">Рубрики</a>
+            <ul class="sub-menu">
+              <li><a href="archive.html">Технології</a></li>
+              <li><a href="archive.html">Дизайн</a></li>
+              <li><a href="archive.html">Маркетинг</a></li>
+            </ul>
+          </li>
+
+          <li class="menu-item-has-children">
+            <a href="#">Сторінки</a>
+            <ul class="sub-menu">
+              <li><a href="page.html">Про нас</a></li>
+              <li><a href="page.html">Контакти</a></li>
+              <li><a href="page.html">Портфоліо</a></li>
+            </ul>
+          </li>
+
+          <li><a href="archive.html">Архів</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
+
+<!-- ======================================================================
+     MAIN CONTENT
+     WP: Між header.php та footer.php — це index.php, archive.php тощо
+     ====================================================================== -->
+<div class="site-wrapper">
+  <div class="content-area">
+
+    <!-- ===== ОСНОВНИЙ КОНТЕНТ ===== -->
+    <main id="main" class="main-content">
+
+      <!--
+        WP: На головній сторінці-блозі НЕ виводяться хлібні крихти —
+        це стандартна практика. Хлібні крихти — тільки на inner-сторінках.
+      -->
+
+      <!-- ===== THE LOOP  →  WP: if ( have_posts() ) : while ( have_posts() ) : the_post() ===== -->
+      <ul class="posts-list">
+
+        <!-- --- Пост 1 --- -->
+        <li class="post-card">
+          <!-- WP: the_post_thumbnail('full') або get_the_post_thumbnail() -->
+          <div class="post-card__thumbnail--placeholder" aria-hidden="true">🖼</div>
+
+          <div class="post-card__body">
+            <!-- WP: get_the_category_list(), get_the_date(), get_the_author() -->
+            <div class="post-card__meta">
+              <span>📁 <a href="archive.html">Технології</a></span>
+              <span>📅 12 березня 2025</span>
+              <span>✍️ <a href="#">Іван Іваненко</a></span>
+              <span>💬 <a href="single.html#comments">8 коментарів</a></span>
+            </div>
+
+            <!-- WP: the_title() -->
+            <h2 class="post-card__title">
+              <a href="single.html">Як правильно "натягнути" верстку на WordPress: повний гайд</a>
+            </h2>
+
+            <!-- WP: the_excerpt() -->
+            <p class="post-card__excerpt">
+              Щоразу коли ви беретеся за новий проєкт на WordPress, виникає одне й те саме питання:
+              з чого почати перетворення готового HTML/CSS на повноцінну тему? У цій статті...
+            </p>
+
+            <!-- WP: the_permalink() -->
+            <a href="single.html" class="btn">Читати далі</a>
+          </div>
+        </li>
+
+        <!-- --- Пост 2 --- -->
+        <li class="post-card">
+          <div class="post-card__thumbnail--placeholder" aria-hidden="true">🎨</div>
+          <div class="post-card__body">
+            <div class="post-card__meta">
+              <span>📁 <a href="archive.html">Дизайн</a></span>
+              <span>📅 5 березня 2025</span>
+              <span>✍️ <a href="#">Марія Коваль</a></span>
+              <span>💬 <a href="single.html#comments">3 коментарі</a></span>
+            </div>
+            <h2 class="post-card__title">
+              <a href="single.html">Основи UI/UX: що потрібно знати кожному верстальнику у 2025 році</a>
+            </h2>
+            <p class="post-card__excerpt">
+              Кордон між верстальником і UX-дизайнером стирається. Сучасний front-end розробник
+              повинен розуміти принципи проєктування інтерфейсів та вміти читати макети...
+            </p>
+            <a href="single.html" class="btn">Читати далі</a>
+          </div>
+        </li>
+
+        <!-- --- Пост 3 --- -->
+        <li class="post-card">
+          <div class="post-card__thumbnail--placeholder" aria-hidden="true">📊</div>
+          <div class="post-card__body">
+            <div class="post-card__meta">
+              <span>📁 <a href="archive.html">Маркетинг</a></span>
+              <span>📅 28 лютого 2025</span>
+              <span>✍️ <a href="#">Олексій Мороз</a></span>
+              <span>💬 <a href="single.html#comments">0 коментарів</a></span>
+            </div>
+            <h2 class="post-card__title">
+              <a href="single.html">SEO для WordPress: плагіни, які справді працюють</a>
+            </h2>
+            <p class="post-card__excerpt">
+              Без базової SEO-оптимізації навіть найкрасивіший сайт залишиться непоміченим.
+              Розглянемо найпопулярніші плагіни та їхні ключові налаштування...
+            </p>
+            <a href="single.html" class="btn">Читати далі</a>
+          </div>
+        </li>
+
+        <!-- --- Пост 4 --- -->
+        <li class="post-card">
+          <div class="post-card__thumbnail--placeholder" aria-hidden="true">⚡</div>
+          <div class="post-card__body">
+            <div class="post-card__meta">
+              <span>📁 <a href="archive.html">Технології</a></span>
+              <span>📅 20 лютого 2025</span>
+              <span>✍️ <a href="#">Іван Іваненко</a></span>
+              <span>💬 <a href="single.html#comments">14 коментарів</a></span>
+            </div>
+            <h2 class="post-card__title">
+              <a href="single.html">Оптимізація швидкості завантаження WordPress-сайту: практичні поради</a>
+            </h2>
+            <p class="post-card__excerpt">
+              PageSpeed Insights показує 45 балів? Не панікуйте. Розберемо покроково,
+              які плагіни підключити, як налаштувати кешування та зменшити вагу зображень...
+            </p>
+            <a href="single.html" class="btn">Читати далі</a>
+          </div>
+        </li>
+
+      </ul>
+      <!-- WP: endwhile; endif; — кінець The Loop -->
+
+      <!-- WP: the_posts_pagination() або paginate_links() -->
+      <nav class="pagination" aria-label="Навігація по сторінках">
+        <span class="current">1</span>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#" aria-label="Наступна сторінка">›</a>
+      </nav>
+
+    </main><!-- #main -->
+
+    <!-- ===== SIDEBAR  →  WP: get_sidebar()  /  sidebar.php ===== -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- WP: dynamic_sidebar('sidebar-1') виводить зареєстровані віджети -->
+      <!-- Нижче — приклади стандартних WP-віджетів -->
+
+      <!-- Віджет: Пошук  →  WP: WP_Widget_Search -->
+      <div class="widget widget-search-wrap">
+        <h3 class="widget__title">Пошук</h3>
+        <div class="widget__body">
+          <!-- WP: get_search_form() -->
+          <form class="widget-search" role="search" method="get" action="#">
+            <label class="visually-hidden" for="s">Пошук:</label>
+            <input class="widget-search__input" type="search" id="s" name="s"
+                   placeholder="Введіть запит…">
+            <button class="widget-search__btn" type="submit" aria-label="Знайти">🔍</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Віджет: Останні записи  →  WP: WP_Widget_Recent_Posts -->
+      <div class="widget">
+        <h3 class="widget__title">Останні записи</h3>
+        <div class="widget__body">
+          <ul class="widget-list">
+            <li><a href="single.html">Як натягнути верстку на WordPress</a></li>
+            <li><a href="single.html">Основи UI/UX для верстальника</a></li>
+            <li><a href="single.html">SEO для WordPress: плагіни</a></li>
+            <li><a href="single.html">Оптимізація швидкості завантаження</a></li>
+            <li><a href="single.html">Custom Post Types: навіщо і як</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Віджет: Рубрики  →  WP: WP_Widget_Categories -->
+      <div class="widget">
+        <h3 class="widget__title">Рубрики</h3>
+        <div class="widget__body">
+          <ul class="widget-list">
+            <li>
+              <a href="archive.html">Технології</a>
+              <span class="count">12</span>
+            </li>
+            <li>
+              <a href="archive.html">Дизайн</a>
+              <span class="count">8</span>
+            </li>
+            <li>
+              <a href="archive.html">Маркетинг</a>
+              <span class="count">5</span>
+            </li>
+            <li>
+              <a href="archive.html">WordPress</a>
+              <span class="count">21</span>
+            </li>
+            <li>
+              <a href="archive.html">Без рубрики</a>
+              <span class="count">3</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Віджет: Хмара міток  →  WP: WP_Widget_Tag_Cloud -->
+      <div class="widget">
+        <h3 class="widget__title">Мітки</h3>
+        <div class="widget__body">
+          <div class="widget-tags">
+            <a href="#">WordPress</a>
+            <a href="#">HTML5</a>
+            <a href="#">CSS3</a>
+            <a href="#">PHP</a>
+            <a href="#">SEO</a>
+            <a href="#">Плагіни</a>
+            <a href="#">Хуки</a>
+            <a href="#">Шаблони</a>
+            <a href="#">Верстка</a>
+            <a href="#">UI/UX</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Віджет: Текст/HTML  →  WP: WP_Widget_Text або Custom HTML -->
+      <div class="widget">
+        <h3 class="widget__title">Про блог</h3>
+        <div class="widget__body widget-text">
+          <p>Навчальний ресурс про WordPress-розробку. Тут ви знайдете гайди,
+             поради та приклади коду для початківців і досвідчених розробників.</p>
+          <p><a href="page.html">Детальніше →</a></p>
+        </div>
+      </div>
+
+    </aside><!-- .sidebar -->
+
+  </div><!-- .content-area -->
+</div><!-- .site-wrapper -->
+
+<!-- ======================================================================
+     FOOTER  →  WP: get_footer()  /  footer.php
+     ====================================================================== -->
+<footer class="site-footer">
+  <div class="site-wrapper">
+
+    <!-- WP: dynamic_sidebar('footer-1'), dynamic_sidebar('footer-2'), dynamic_sidebar('footer-3') -->
+    <div class="footer-widgets">
+
+      <!-- Footer widget zone 1 -->
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">WP Learn Theme</h4>
+        <p>Навчальний проєкт для освоєння розробки тем WordPress. Всі матеріали безкоштовні.</p>
+      </div>
+
+      <!-- Footer widget zone 2 -->
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Навігація</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="archive.html">Архів</a></li>
+          <li><a href="page.html">Про нас</a></li>
+          <li><a href="page.html">Контакти</a></li>
+          <!-- WP: wp_nav_menu(['theme_location' => 'footer']) -->
+        </ul>
+      </div>
+
+      <!-- Footer widget zone 3 -->
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Контакти</h4>
+        <ul>
+          <li>📧 <a href="mailto:info@example.com">info@example.com</a></li>
+          <li>🐦 <a href="#">Twitter / X</a></li>
+          <li>📘 <a href="#">Facebook</a></li>
+          <li>💬 <a href="#">Telegram</a></li>
+        </ul>
+      </div>
+
+    </div><!-- .footer-widgets -->
+
+    <!-- WP: bloginfo('name'), date('Y') -->
+    <div class="footer-bar">
+      <span>© 2025 <a href="index.html">WP Learn Theme</a>. Всі права захищено.</span>
+      <span>Зроблено з ❤️ для навчання WordPress</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- WP: wp_footer() — сюди плагіни вставляють скрипти -->
+
+</body>
+</html>

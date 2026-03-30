@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- WP: wp_head() -->
+  <title>Як правильно "натягнути" верстку на WordPress — WP Learn Theme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="single single-post">
+<!--
+  WP: body_class() → 'single single-post postid-42 category-technologies'
+-->
+
+<!-- ======================================================================
+     HEADER  →  WP: get_header()
+     ====================================================================== -->
+<header class="site-header">
+  <div class="site-wrapper">
+    <div class="site-header__inner">
+
+      <div class="site-branding">
+        <p class="site-title"><a href="index.html">WP Learn Theme</a></p>
+        <p class="site-description">Навчальна верстка для WordPress</p>
+      </div>
+
+      <!-- WP: wp_nav_menu(['theme_location' => 'primary']) -->
+      <nav class="main-nav" aria-label="Головна навігація">
+        <ul class="main-nav__list">
+          <li><a href="index.html">Головна</a></li>
+          <li class="menu-item-has-children">
+            <a href="#">Рубрики</a>
+            <ul class="sub-menu">
+              <li><a href="archive.html">Технології</a></li>
+              <li><a href="archive.html">Дизайн</a></li>
+              <li><a href="archive.html">Маркетинг</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children">
+            <a href="#">Сторінки</a>
+            <ul class="sub-menu">
+              <li><a href="page.html">Про нас</a></li>
+              <li><a href="page.html">Контакти</a></li>
+              <li><a href="page.html">Портфоліо</a></li>
+            </ul>
+          </li>
+          <li><a href="archive.html">Архів</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
+
+<!-- ======================================================================
+     MAIN CONTENT  →  WP: single.php
+     ====================================================================== -->
+<div class="site-wrapper">
+  <div class="content-area">
+
+    <main id="main" class="main-content">
+
+      <!-- ===== ХЛІБНІ КРИХТИ ===
+           WP: Yoast SEO → yoast_breadcrumb()
+                           або Rank Math → rank_math_the_breadcrumbs()
+                           або Breadcrumb NavXT → bcn_display()
+                           або вручну через get_the_category() + get_permalink()
+      -->
+      <nav class="breadcrumbs" aria-label="Хлібні крихти">
+        <a href="index.html">Головна</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <a href="archive.html">Технології</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span class="current">Як правильно "натягнути" верстку на WordPress</span>
+      </nav>
+
+      <!-- ===== THE LOOP (single post)
+           WP: if ( have_posts() ) : while ( have_posts() ) : the_post();
+      ===== -->
+      <article class="single-post" id="post-42">
+        <!--
+          WP: post_class() → 'post-42 post type-post status-publish format-standard
+                              has-post-thumbnail category-technologies tag-wordpress tag-html5'
+        -->
+
+        <!-- WP: the_title() -->
+        <h1 class="single-post__title">
+          Як правильно "натягнути" верстку на WordPress: повний гайд
+        </h1>
+
+        <!-- WP: get_the_date(), get_the_author_posts_link(), get_the_category_list(), comments_number() -->
+        <div class="single-post__meta">
+          <span>📅 <time datetime="2025-03-12">12 березня 2025</time></span>
+          <span>✍️ <a href="#">Іван Іваненко</a></span>
+          <span>📁 <a href="archive.html">Технології</a></span>
+          <span>⏱ 8 хв читання</span>
+          <span>💬 <a href="#comments">8 коментарів</a></span>
+        </div>
+
+        <!-- WP: the_post_thumbnail('full') -->
+        <div class="post-card__thumbnail--placeholder single-post__thumbnail" aria-hidden="true" style="height:320px;font-size:5rem;">🖼</div>
+
+        <!-- WP: the_content() — виводить весь контент посту з редактора -->
+        <div class="entry-content">
+
+          <p>Щоразу коли ви беретеся за новий проєкт на WordPress, виникає одне й те саме питання:
+          з чого почати перетворення готового HTML/CSS на повноцінну тему?
+          У цьому гайді ми розберемо процес крок за кроком.</p>
+
+          <h2>Крок 1: Структура файлів теми</h2>
+          <p>Мінімально необхідні файли для будь-якої теми WordPress — це лише два: <strong>style.css</strong>
+          та <strong>index.php</strong>. Але для повноцінної роботи вам знадобиться більше:</p>
+
+          <ul>
+            <li><code>style.css</code> — головний CSS + метадані теми</li>
+            <li><code>index.php</code> — шаблон за замовчуванням</li>
+            <li><code>header.php</code> — шапка сайту</li>
+            <li><code>footer.php</code> — підвал сайту</li>
+            <li><code>sidebar.php</code> — бічна панель</li>
+            <li><code>single.php</code> — окремий пост</li>
+            <li><code>page.php</code> — статична сторінка</li>
+            <li><code>archive.php</code> — архів / категорія</li>
+            <li><code>functions.php</code> — реєстрація хуків, меню, сайдбарів</li>
+          </ul>
+
+          <h2>Крок 2: Розрізаємо HTML на PHP-шматки</h2>
+          <p>Ваш <code>index.html</code> треба розрізати на частини. Все, що знаходиться
+          до <code>&lt;main&gt;</code> — іде у <code>header.php</code>. Після закриваючого
+          <code>&lt;/main&gt;</code> — у <code>footer.php</code>.</p>
+
+          <blockquote>
+            💡 Ключове правило: WordPress збирає сторінку з шаблонних файлів через функції
+            <code>get_header()</code>, <code>get_footer()</code>, <code>get_sidebar()</code>.
+          </blockquote>
+
+          <h2>Крок 3: The Loop</h2>
+          <p>Серце WordPress — це "The Loop". Вся виведення постів відбувається через нього:</p>
+
+          <pre><code>&lt;?php if ( have_posts() ) : ?>
+  &lt;?php while ( have_posts() ) : the_post(); ?>
+
+    &lt;article id="post-&lt;?php the_ID(); ?>" &lt;?php post_class(); ?>>
+      &lt;h2>&lt;a href="&lt;?php the_permalink(); ?>">&lt;?php the_title(); ?>&lt;/a>&lt;/h2>
+      &lt;?php the_excerpt(); ?>
+    &lt;/article>
+
+  &lt;?php endwhile; ?>
+&lt;?php endif; ?></code></pre>
+
+          <h2>Крок 4: Реєстрація меню та сайдбарів</h2>
+          <p>У файлі <code>functions.php</code> потрібно зареєструвати всі зони меню
+          та сайдбарів, щоб вони з'явилися в адмінпанелі WordPress:</p>
+
+          <pre><code>function wplearn_setup() {
+    register_nav_menus([
+        'primary' => 'Головне меню',
+        'footer'  => 'Меню у футері',
+    ]);
+}
+add_action( 'after_setup_theme', 'wplearn_setup' );
+
+function wplearn_widgets_init() {
+    register_sidebar([
+        'name'          => 'Бічна панель',
+        'id'            => 'sidebar-1',
+        'before_widget' => '&lt;div class="widget">',
+        'after_widget'  => '&lt;/div>',
+        'before_title'  => '&lt;h3 class="widget__title">',
+        'after_title'   => '&lt;/h3>',
+    ]);
+}
+add_action( 'widgets_init', 'wplearn_widgets_init' );</code></pre>
+
+          <p>Тепер меню та сайдбари з'являться у <strong>Зовнішній вигляд → Меню</strong>
+          та <strong>Зовнішній вигляд → Віджети</strong> в адмінпанелі.</p>
+
+          <h3>Підсумок</h3>
+          <p>Процес "натягування" верстки на WordPress — це в першу чергу розуміння ієрархії шаблонів
+          і правильне використання WordPress API. Не поспішайте: розберіть кожну функцію,
+          прочитайте документацію на developer.wordpress.org.</p>
+
+        </div><!-- .entry-content -->
+
+        <!-- WP: the_tags() -->
+        <div class="post-tags">
+          <strong>Мітки:</strong>
+          <a href="#">WordPress</a>
+          <a href="#">HTML5</a>
+          <a href="#">CSS3</a>
+          <a href="#">PHP</a>
+          <a href="#">Верстка</a>
+          <a href="#">Шаблони</a>
+        </div>
+
+      </article>
+      <!-- WP: endwhile; endif; -->
+
+      <!-- WP: the_post_navigation() -->
+      <nav class="post-navigation" aria-label="Навігація між постами">
+        <a href="single.html" class="nav-prev">
+          <span>Попередній</span><br>
+          <strong>SEO для WordPress: плагіни, які справді працюють</strong>
+        </a>
+        <a href="single.html" class="nav-next">
+          <span>Наступний</span><br>
+          <strong>Оптимізація швидкості завантаження WordPress-сайту</strong>
+        </a>
+      </nav>
+
+      <!-- ===== COMMENTS  →  WP: comments_template()  /  comments.php ===== -->
+      <section class="comments-area" id="comments">
+
+        <!-- WP: comments_number() -->
+        <h2 class="comments-title">Коментарі (8)</h2>
+
+        <!-- WP: wp_list_comments(['style' => 'ul', 'avatar_size' => 48]) -->
+        <ul class="comment-list">
+
+          <li class="comment">
+            <div class="comment__avatar" aria-hidden="true">👤</div>
+            <div class="comment__body">
+              <div class="comment__meta">
+                <span class="comment__author">Олена Петренко</span>
+                &nbsp;·&nbsp;
+                <time datetime="2025-03-13">13 березня 2025, 10:24</time>
+              </div>
+              <p>Дуже корисна стаття! Довго не міг зрозуміти де реєструвати сайдбари —
+                 тепер все стало на свої місця. Дякую!</p>
+            </div>
+          </li>
+
+          <li class="comment">
+            <div class="comment__avatar" aria-hidden="true">👤</div>
+            <div class="comment__body">
+              <div class="comment__meta">
+                <span class="comment__author">Сергій В.</span>
+                &nbsp;·&nbsp;
+                <time datetime="2025-03-14">14 березня 2025, 14:05</time>
+              </div>
+              <p>А як краще підключати стилі: через functions.php чи напряму в header.php?
+                 Бачив різні підходи в різних темах.</p>
+            </div>
+          </li>
+
+          <li class="comment">
+            <div class="comment__avatar" aria-hidden="true">✍️</div>
+            <div class="comment__body">
+              <div class="comment__meta">
+                <span class="comment__author">Іван Іваненко</span>
+                <span> (автор)</span>
+                &nbsp;·&nbsp;
+                <time datetime="2025-03-14">14 березня 2025, 15:30</time>
+              </div>
+              <p>Сергію, тільки через <code>wp_enqueue_style()</code> в functions.php — це найправильніший спосіб.
+                 Пряме підключення в header.php вважається поганою практикою.</p>
+            </div>
+          </li>
+
+        </ul>
+
+        <!-- WP: comment_form() -->
+        <div class="comment-form" id="respond">
+          <h3 class="comment-form__title">Залишити коментар</h3>
+
+          <div class="comment-form__field">
+            <label for="comment-author">Ваше ім'я *</label>
+            <input type="text" id="comment-author" name="author" required>
+          </div>
+          <div class="comment-form__field">
+            <label for="comment-email">Email *</label>
+            <input type="email" id="comment-email" name="email" required>
+          </div>
+          <div class="comment-form__field">
+            <label for="comment-content">Коментар *</label>
+            <textarea id="comment-content" name="comment" required></textarea>
+          </div>
+          <button type="submit" class="btn">Надіслати коментар</button>
+        </div>
+
+      </section><!-- #comments -->
+
+    </main><!-- #main -->
+
+    <!-- SIDEBAR  →  WP: get_sidebar() -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="widget widget-search-wrap">
+        <h3 class="widget__title">Пошук</h3>
+        <div class="widget__body">
+          <form class="widget-search" role="search" method="get" action="#">
+            <label class="visually-hidden" for="s2">Пошук:</label>
+            <input class="widget-search__input" type="search" id="s2" name="s" placeholder="Введіть запит…">
+            <button class="widget-search__btn" type="submit" aria-label="Знайти">🔍</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h3 class="widget__title">Останні записи</h3>
+        <div class="widget__body">
+          <ul class="widget-list">
+            <li><a href="single.html">Як натягнути верстку на WordPress</a></li>
+            <li><a href="single.html">Основи UI/UX для верстальника</a></li>
+            <li><a href="single.html">SEO для WordPress: плагіни</a></li>
+            <li><a href="single.html">Оптимізація швидкості завантаження</a></li>
+            <li><a href="single.html">Custom Post Types: навіщо і як</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h3 class="widget__title">Рубрики</h3>
+        <div class="widget__body">
+          <ul class="widget-list">
+            <li><a href="archive.html">Технології</a><span class="count">12</span></li>
+            <li><a href="archive.html">Дизайн</a><span class="count">8</span></li>
+            <li><a href="archive.html">Маркетинг</a><span class="count">5</span></li>
+            <li><a href="archive.html">WordPress</a><span class="count">21</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h3 class="widget__title">Мітки</h3>
+        <div class="widget__body">
+          <div class="widget-tags">
+            <a href="#">WordPress</a>
+            <a href="#">HTML5</a>
+            <a href="#">CSS3</a>
+            <a href="#">PHP</a>
+            <a href="#">SEO</a>
+            <a href="#">Плагіни</a>
+            <a href="#">Хуки</a>
+            <a href="#">Верстка</a>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div><!-- .content-area -->
+</div><!-- .site-wrapper -->
+
+<!-- FOOTER  →  WP: get_footer() -->
+<footer class="site-footer">
+  <div class="site-wrapper">
+    <div class="footer-widgets">
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">WP Learn Theme</h4>
+        <p>Навчальний проєкт для освоєння розробки тем WordPress.</p>
+      </div>
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Навігація</h4>
+        <ul>
+          <li><a href="index.html">Головна</a></li>
+          <li><a href="archive.html">Архів</a></li>
+          <li><a href="page.html">Про нас</a></li>
+          <li><a href="page.html">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="footer-widget">
+        <h4 class="footer-widget__title">Контакти</h4>
+        <ul>
+          <li>📧 <a href="mailto:info@example.com">info@example.com</a></li>
+          <li>🐦 <a href="#">Twitter / X</a></li>
+          <li>📘 <a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>© 2025 <a href="index.html">WP Learn Theme</a>. Всі права захищено.</span>
+      <span>Зроблено з ❤️ для навчання WordPress</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WP: wp_footer() -->
+
+</body>
+</html>

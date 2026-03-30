@@ -1,0 +1,293 @@
+/*
+Theme Name: Slaydiva
+Author: POLKA
+Version: 1.0
+*/
+@font-face {
+    font-family: '1488';
+    src: url('assets/fonts/dura.ttf');
+}
+@font-face {
+    font-family: 'happie';
+    src: url('assets/fonts/eve.ttf');
+}
+@font-face {
+    font-family: 'succesfull';
+    src: url('assets/fonts/poll.ttf');
+}
+@font-face {
+    font-family: '69';
+    src: url('assets/fonts/msh.ttf');
+}
+@font-face {
+    font-family: 'nacism';
+    src: url('assets/fonts/nina.ttf');
+}
+@font-face {
+    font-family: 'wwree' ;
+    src: url('assets/fonts/shit.ttf');
+}
+
+:root{
+    --color-bg:var(pink);
+    --color-text:var(black);
+    --color-accent:var(green);
+}
+body{
+    background-color: darkmagenta;
+    color: rebeccapurple;
+    font-family:'nacism';
+    margin: 0;
+    padding: 0;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4;
+}
+.logo a {
+    text-decoration: line-through;
+    font-size: medium;
+    color: darkgreen;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url('assets/images/brat.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero h1 {
+    font-size: medium ;
+    color: blueviolet;
+}
+.hero p {
+    font-size: larger;
+    color: aqua;
+}
+.btn {
+    text-decoration: none;
+    padding: 15px 40px;
+    border: 1px solid ;
+    color: white;
+    font-size: 14px; ;
+    letter-spacing: 3px;
+}
+.btm:hover{
+    background-color: yellow;
+    color: #000;
+}
+
+footer p {
+    color: green;
+    font-size: 14px;
+    font-family: '1488';
+}
+footer {
+    text-align: center;
+    background-color:palevioletred ;
+}
+
+footer img {
+    width: 200px; 
+    height: 100px;
+}
+
+/* Страница Про мене — вайб Бората */
+.about {
+    padding: 80px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f5c518;
+}
+
+.about h1 {
+    font-size: 60px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+    border-bottom: 4px solid #1a1a1a;
+    padding-bottom: 20px;
+}
+
+.about p {
+    font-size: 20px;
+    color: #1a1a1a;
+    max-width: 700px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+/* Анимация заголовка */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Анимация текста */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.about h1 {
+    animation: slideDown 1s ease;
+}
+
+.about div {
+    animation: fadeIn 2s ease;
+}
+/* Анимации появления */
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3); }
+    50% { transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideLeft {
+    from { opacity: 0; transform: translateX(-100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spinIn {
+    from { opacity: 0; transform: rotate(-180deg) scale(0); }
+    to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+/* Скрываем до появления на экране */
+.bounce { opacity: 0; }
+.slide-left { opacity: 0; }
+.slide-right { opacity: 0; }
+.spin { opacity: 0; }
+
+/* Когда появляется на экране */
+.bounce.visible { animation: bounceIn 0.8s ease forwards; }
+.slide-left.visible { animation: slideLeft 0.8s ease forwards; }
+.slide-right.visible { animation: slideRight 0.8s ease forwards; }
+.spin.visible { animation: spinIn 0.8s ease forwards; }
+#music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 999;
+    background-color: ;
+    color: red;
+}
+.borat-photo img {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: block;
+}
+
+.borat-quote {
+    background-color: #5e0b0b;
+    color: #f5c518;
+    padding: 20px 40px;
+    margin: 20px auto;
+    max-width: 600px;
+    font-size: 22px;
+    font-style: italic;
+    border-left: 5px solid #f5c518;
+}
+
+.borat-gif img {
+    width: 300px;
+    margin: 20px auto;
+    display: block;
+}
+nav ul li {
+    position: relative;
+}
+
+nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: black;
+    min-width: 150px;
+    z-index: 999;
+    padding: 0;
+}
+
+nav ul li:hover ul {
+    display: block;
+}
+
+nav ul li ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: gold;
+}
+
+nav ul li ul li a:hover {
+    background-color: gold;
+    color: black;
+}
+#color-picker-panel {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 9999;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#color-picker-panel p {
+    margin: 0 0 10px 0;
+    color: black;
+    font-size: 14px;
+}
+
+#color-picker-panel button {
+    margin-top: 10px;
+    padding: 5px 15px;
+    cursor: pointer;
+    border: none;
+    background-color: black;
+    color: white;
+}
