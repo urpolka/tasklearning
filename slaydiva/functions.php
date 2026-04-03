@@ -11,6 +11,9 @@ function register_my_menus() {
 }
 add_action( 'after_setup_theme', 'register_my_menus' );
 
+// ==================================================
+// Форма обратной связи
+// ==================================================
 
 function my_contact_form_shortcode() {
     ob_start();
@@ -22,6 +25,7 @@ function my_contact_form_shortcode() {
             echo '<div class="form-message error">Ошибка. Партия недовольна</div>';
         }
     }
+
     $errors = get_transient('my_form_errors');
     if ( is_array($errors) ) {
         echo '<div class="form-message error-list"><ul>';
@@ -31,6 +35,7 @@ function my_contact_form_shortcode() {
         echo '</ul></div>';
         delete_transient('my_form_errors');
     }
+
     $old = get_transient('my_form_data');
     if ( is_array($old) ) {
         $old_name    = esc_attr($old['name']);
@@ -65,6 +70,7 @@ function my_form_handler() {
         if ( ! isset($_POST['my_form_nonce']) || ! wp_verify_nonce($_POST['my_form_nonce'], 'my_form_action') ) {
             wp_die('Недействительный запрос.');
         }
+
         $name    = sanitize_text_field( $_POST['name'] );
         $message = sanitize_textarea_field( $_POST['message'] );
         $errors  = [];
@@ -77,7 +83,7 @@ function my_form_handler() {
         }
 
         if ( empty($errors) ) {
-            $to = get_option('admin_email'); // письмо уйдёт на email администратора
+            $to = get_option('admin_email'); // письмо уходит на email администратора
             $subject = 'Сообщение с сайта от ' . $name;
             $body    = "Имя: $name\n\nСообщение:\n$message";
             $headers = array('Content-Type: text/plain; charset=UTF-8');
@@ -95,4 +101,3 @@ function my_form_handler() {
     }
 }
 add_action('init', 'my_form_handler');
-
