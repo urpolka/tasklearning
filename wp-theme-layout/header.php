@@ -4,3 +4,6 @@
     <meta charset="UTF-8">
     <title>learning</title>
     <?php wp_head(); ?>
+    </head>
+<body>
+    <div class="site-wrapper">
