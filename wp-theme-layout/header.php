@@ -15,6 +15,14 @@
             </div>
             <div class="site-description"><?php bloginfo('description'); ?></div>
         </div>
-        <!-- меню -->
+        <nav class="main-nav">
+    <?php
+    wp_nav_menu( array(
+        'theme_location' => 'primary',
+        'menu_class'     => 'main-nav__list',
+        'container'      => false,
+    ) );
+    ?>
+</nav>
     </div>
 </header>
