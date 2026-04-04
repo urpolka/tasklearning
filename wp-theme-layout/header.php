@@ -7,3 +7,14 @@
     </head>
 <body>
     <div class="site-wrapper">
+        <header class="site-header">
+    <div class="site-header__inner">
+        <div class="site-branding">
+            <div class="site-title">
+                <a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a>
+            </div>
+            <div class="site-description"><?php bloginfo('description'); ?></div>
+        </div>
+        <!-- меню -->
+    </div>
+</header>
